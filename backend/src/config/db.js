@@ -1,22 +1,40 @@
 // backend/src/config/db.js
-require('dotenv').config();                  // Carga variables de .env
+require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize({
-  dialect: process.env.DB_DIALECT,           // 'sqlite' u otro dialecto según env
-  storage: process.env.DB_STORAGE,           // 'src/database.sqlite' o path según env
-  logging: false,                            // Desactiva logs en consola
-});
+const dialect = process.env.DB_DIALECT || 'sqlite';
+let sequelize;
+
+if (dialect === 'sqlite') {
+  // Configuración para SQLite
+  sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: process.env.DB_STORAGE || 'src/database.sqlite',
+    logging: false
+  });
+} else {
+  // Configuración para MariaDB (u otros dialectos SQL)
+  sequelize = new Sequelize(
+    process.env.DB_NAME,   // nombre de la base de datos
+    process.env.DB_USER,   // usuario
+    process.env.DB_PASS,   // contraseña
+    {
+      host: process.env.DB_HOST,
+      dialect: dialect,    // ej. 'mariadb'
+      logging: false
+    }
+  );
+}
 
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ Base de datos conectada correctamente.');
     if (process.env.NODE_ENV === 'test') {
-      // En tests: recreamos las tablas desde cero
+      // En CI/tests recreamos las tablas completamente
       await sequelize.sync({ force: true });
     } else {
-      // En dev/prod: ajustamos sin perder datos
+      // En desarrollo/producción ajustamos sin perder datos
       await sequelize.sync({ alter: true });
     }
   } catch (error) {
@@ -28,6 +46,5 @@ const connectDB = async () => {
     }
   }
 };
-
 
 module.exports = { sequelize, connectDB };
