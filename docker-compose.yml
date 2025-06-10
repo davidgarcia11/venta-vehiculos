@@ -1,0 +1,43 @@
+# docker-compose.yml
+services:
+  db:
+    image: mariadb:10.9
+    environment:
+      MYSQL_DATABASE: devdb
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: dev
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"   # Host:Container
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      DB_DIALECT: mariadb
+      DB_HOST: db
+      DB_NAME: devdb
+      DB_USER: dev
+      DB_PASS: dev
+      PORT: 5000
+    ports:
+      - "5000:5000"
+    command: npm start
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data: {}
