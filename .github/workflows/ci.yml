@@ -50,6 +50,7 @@ jobs:
         run: npm run test:integration
 
       - name: Build Docker images
+              - name: Build Docker images
         run: |
           docker build -t venta-vehiculos-backend ./backend
           docker build -t venta-vehiculos-frontend ./frontend
