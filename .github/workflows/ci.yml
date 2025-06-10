@@ -43,7 +43,7 @@ jobs:
         env:
           NODE_ENV: test
           DB_DIALECT: mariadb
-          DB_HOST: mariadb
+          DB_HOST: 127.0.0.1
           DB_NAME: testdb
           DB_USER: test
           DB_PASS: test
