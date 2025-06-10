@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta de Vehículos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">🚗 Vehículos</a></li>
+                <li><a href="clientes.html">👥 Clientes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>🚗 Venta de Vehículos</h1>
+
+    <h2>Lista de Vehículos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>KM</th>
+                <th>Precio</th>
+                <th>Tipo</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="vehiculos-table">
+            <!-- Aquí se insertarán los vehículos dinámicamente -->
+        </tbody>
+    </table>
+
+    <h2>Agregar Nuevo Vehículo</h2>
+    <form id="vehiculo-form">
+        <input type="text" id="marca" placeholder="Marca" required>
+        <input type="text" id="modelo" placeholder="Modelo" required>
+        <input type="number" id="anio" placeholder="Año" required>
+        <input type="number" id="precio" placeholder="Precio" required>
+        <input type="number" id="kilometraje" placeholder="Kilometraje" required>
+        <input type="text" id="tipo" placeholder="Tipo (Sedán, SUV, etc.)" required>
+        <button type="submit" id="submit-button">Agregar Vehículo</button>
+    </form>    
+
+
+    <script src="app.js"></script>
+</body>
+
+</html>

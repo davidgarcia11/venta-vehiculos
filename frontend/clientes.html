@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Clientes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">🚗 Vehículos</a></li>
+                <li><a href="clientes.html">👥 Clientes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1>👥 Gestión de Clientes</h1>
+
+    <h2>Lista de Clientes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="clientes-table">
+            <!-- Aquí se insertarán los clientes dinámicamente -->
+        </tbody>
+    </table>
+
+    <h2>Agregar Nuevo Cliente</h2>
+    <form id="cliente-form">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="text" id="apellido" placeholder="Apellido" required> <!-- ✅ Nuevo campo -->
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="telefono" placeholder="Teléfono" required>
+        <input type="text" id="direccion" placeholder="Dirección" required>
+        <button type="submit" id="submit-button">Agregar Cliente</button>
+    </form>
+    
+    <script src="clientes.js"></script>
+</body>
+</html>

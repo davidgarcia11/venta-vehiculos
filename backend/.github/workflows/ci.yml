@@ -1,0 +1,39 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:10.9
+        env:
+          MYSQL_DATABASE: testdb
+          MYSQL_USER: test
+          MYSQL_PASSWORD: test
+          MYSQL_ROOT_PASSWORD: root
+        ports: ['3306:3306']
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run unit tests
+        run: npm run test:unit
+      - name: Run integration tests
+        env:
+          NODE_ENV: test
+          DB_DIALECT: mariadb
+          DB_HOST: localhost
+          DB_NAME: testdb
+          DB_USER: test
+          DB_PASS: test
+        run: npm run test:integration
+      - name: Build Docker images
+        run: |
+          docker build -t venta-vehiculos-backend ./backend
+          docker build -t venta-vehiculos-frontend ./frontend
